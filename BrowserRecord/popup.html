@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>浏览记录监控</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 500px;
+      min-height: 400px;
+      font-family: 'Microsoft YaHei', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    h1 {
+      color: #333;
+      font-size: 20px;
+    }
+    
+    .lang-switch {
+      background: #f0f0f0;
+      border-radius: 20px;
+      padding: 4px;
+      display: flex;
+      gap: 4px;
+    }
+    
+    .lang-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 12px;
+      background: transparent;
+      color: #666;
+      transition: all 0.3s;
+    }
+    
+    .lang-btn.active {
+      background: #667eea;
+      color: white;
+    }
+    
+    .info-bar {
+      background: #f7f9fc;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .ip-display {
+      color: #667eea;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    
+    .record-count {
+      color: #666;
+      font-size: 13px;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    button:not(.lang-btn) {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    
+    .export-btn {
+      background: #667eea;
+      color: white;
+    }
+    
+    .export-btn:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    
+    .clear-btn {
+      background: #ff6b6b;
+      color: white;
+    }
+    
+    .clear-btn:hover {
+      background: #ee5a52;
+    }
+    
+    .refresh-btn {
+      background: #51cf66;
+      color: white;
+    }
+    
+    .refresh-btn:hover {
+      background: #40c057;
+    }
+    
+    .records {
+      max-height: 350px;
+      overflow-y: auto;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 10px;
+    }
+    
+    .record-item {
+      background: #f9fafb;
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border-left: 3px solid #667eea;
+      transition: all 0.2s;
+    }
+    
+    .record-item:hover {
+      background: #f1f3f5;
+      transform: translateX(5px);
+    }
+    
+    .record-url {
+      color: #333;
+      font-size: 13px;
+      word-break: break-all;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    
+    .record-meta {
+      display: flex;
+      gap: 15px;
+      font-size: 11px;
+      color: #666;
+    }
+    
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+    }
+    
+    .empty-state svg {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 15px;
+      opacity: 0.3;
+    }
+    
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #667eea;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 data-i18n="title">🌐 浏览记录监控</h1>
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="en">English</button>
+      </div>
+    </div>
+    
+    <div class="info-bar">
+      <div class="ip-display">IP: <span id="currentIP">加载中...</span></div>
+      <div class="record-count"><span data-i18n="recordCount">记录数</span>: <span id="recordCount">0</span></div>
+    </div>
+    
+    <div class="controls">
+      <button class="export-btn" id="exportBtn"><span data-i18n="export">📥 导出TXT</span></button>
+      <button class="refresh-btn" id="refreshBtn"><span data-i18n="refresh">🔄 刷新</span></button>
+      <button class="clear-btn" id="clearBtn"><span data-i18n="clear">🗑️ 清空</span></button>
+    </div>
+    
+    <div class="records" id="recordsList"></div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

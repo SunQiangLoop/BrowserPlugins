@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Download Cleaner Pro",
+  "version": "1.1",        
+  "description": "Automatically remove expired or deleted download records to keep your browser tidy.自动清理已删除或过期的下载记录，保持浏览器整洁。",
+  "permissions": ["downloads"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon.png",
+      "32": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    },
+    "default_title": "Auto Clean Downloads"
+  }
+}
+
